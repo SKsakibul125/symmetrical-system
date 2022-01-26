@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ViewToken Object Type</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">ViewToken Object Type</h1>
+</header>
+<p><code>ViewToken</code> object is returned as one of properties in the <code>onViewableItemsChanged</code> callback, for example in <a href="flatlist">FlatList</a> component. It is exported by <a href="https://github.com/facebook/react-native/blob/master/Libraries/Lists/ViewabilityHelper.js"><code>ViewabilityHelper.js</code></a>.</p>
+<h2 id="example">Example</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">item</span><span class="op">:</span> <span class="op">{</span> <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;key-12&quot;</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;key-12&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">index</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">isViewable</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="op">}</span></a></code></pre></div>
+<h2 id="keys-and-values">Keys and values</h2>
+<h3 id="index"><code>index</code></h3>
+<p>Unique numeric identifier assigned to the data element.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>number</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="isviewable"><code>isViewable</code></h3>
+<p>Specifies if at least some part of list element is visible in the viewport.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>boolean</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h3 id="item"><code>item</code></h3>
+<p>Item data</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>any</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h3 id="key"><code>key</code></h3>
+<p>Key identifier assigned of the data element extracted to the top level.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>string</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h3 id="section"><code>section</code></h3>
+<p>Item section data when used with <code>SectionList</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>any</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="used-by">Used by</h2>
+<ul>
+<li><a href="flatlist"><code>FlatList</code></a></li>
+<li><a href="sectionlist"><code>SectionList</code></a></li>
+<li><a href="virtualizedlist"><code>VirtualizedList</code></a></li>
+</ul>
+</body>
+</html>
