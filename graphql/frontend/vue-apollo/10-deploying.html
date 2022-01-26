@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Deploying</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Deploying</h1>
+</header>
+<p>Finally, let’s learn how to easily deploy VueJS applications with <a href="http://surge.sh/">Surge.sh</a>.</p>
+<h2 id="installing-and-running-surge">Installing and running Surge</h2>
+<p>First, you need to install Surge globally.</p>
+<p><Instruction></p>
+<p>Open up a terminal window and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">npm</span> install -g surge</a></code></pre></div>
+<p></Instruction></p>
+<p>Now you need to build your application for production.</p>
+<p><Instruction></p>
+<p>Open up a terminal and navigate to your project directory and run the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">npm</span> run build</a></code></pre></div>
+<p></Instruction></p>
+<p>This command will build your app for production and output the results into the <code>/dist</code> directory.</p>
+<p>Finally, you need to run Surge within this newly created <code>/dist</code> directory.</p>
+<p><Instruction></p>
+<p>Open up a terminal, navigate to <code>/dist</code>, and run the <code>surge</code> command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="bu">cd</span> dist</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">surge</span></a></code></pre></div>
+<p></Instruction></p>
+<p>You may be asked to login or create an account. After you do so and hit <code>enter</code> a couple times to proceed, you will be presented with a URL for your deployed app. Paste this URL into your browser and you will see your app up and running. Share this link with your friends to show them the sweet new app you just created through HowToGraphQL!</p>
+</body>
+</html>

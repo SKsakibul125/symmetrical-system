@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Out-of-Tree Platforms</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Out-of-Tree Platforms</h1>
+</header>
+<p>React Native is not only for Android and iOS - there are community-supported projects that bring it to other platforms, such as:</p>
+<ul>
+<li><a href="https://github.com/Microsoft/react-native-windows">React Native Windows</a> - React Native support for targeting Microsoft’s Universal Windows Platform (UWP).</li>
+<li><a href="https://github.com/microsoft/react-native-macos">React Native macOS</a> - React Native fork targeting macOS and Cocoa.</li>
+<li><a href="https://github.com/lazaronixon/react-native-turbolinks">React Native Turbolinks</a> - React Native adapter for building hybrid apps with Turbolinks 5.</li>
+<li><a href="https://github.com/status-im/react-native-desktop">React Native Desktop</a> - A project aiming to bring React Native to the Desktop with Qt’s QML. A fork of <a href="https://github.com/CanonicalLtd/react-native/">React Native Ubuntu</a>, which is no longer maintained.</li>
+<li><a href="https://github.com/react-native-community/react-native-tvos">React Native tvOS</a> - adaptation of React Native for Apple tvOS</li>
+<li><a href="https://github.com/areslabs/alita">alita</a> - An experimental, comprehensive port of React Native to mini-program(微信小程序).</li>
+<li><a href="https://github.com/valence-native/valence-native">Valence Native</a> - A wrapper for React Native, using Qt to target Linux, MacOS, and Windows forked from <a href="https://github.com/kusti8/proton-native">Proton native</a> which is no longer maintained.</li>
+</ul>
+<h2 id="creating-your-own-react-native-platform">Creating your own React Native platform</h2>
+<p>Right now the process of creating a React Native platform from scratch is not very well documented - one of the goals of the upcoming re-architecture (<a href="/blog/2018/06/14/state-of-react-native-2018">Fabric</a>) is to make maintaining a platform easier.</p>
+<h3 id="bundling">Bundling</h3>
+<p>As of React Native 0.57 you can now register your React Native platform with React Native’s JavaScript bundler, <a href="https://facebook.github.io/metro/">Metro</a>. This means you can pass <code>--platform example</code> to <code>npx react-native bundle</code>, and it will look for JavaScript files with the <code>.example.js</code> suffix.</p>
+<p>To register your platform with RNPM, your module’s name must match one of these patterns:</p>
+<ul>
+<li><code>react-native-example</code> - It will search all top-level modules that start with <code>react-native-</code></li>
+<li><code>@org/react-native-example</code> - It will search for modules that start with <code>react-native-</code> under any scope</li>
+<li><code>@react-native-example/module</code> - It will search in all modules under scopes with names starting with <code>@react-native-</code></li>
+</ul>
+<p>You must also have an entry in your <code>package.json</code> like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">&quot;rnpm&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">&quot;haste&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">      <span class="dt">&quot;providesModuleNodeModules&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;react-native-example&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">      <span class="dt">&quot;platforms&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;example&quot;</span><span class="ot">]</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-7" title="7">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="fu">}</span></a></code></pre></div>
+<p><code>"providesModuleNodeModules"</code> is an array of modules that will get added to the Haste module search path, and <code>"platforms"</code> is an array of platform suffixes that will be added as valid platforms.</p>
+</body>
+</html>

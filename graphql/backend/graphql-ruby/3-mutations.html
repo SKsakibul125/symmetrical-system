@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Mutations</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Mutations</h1>
+</header>
+<h3 id="mutation-for-creating-links">Mutation for Creating Links</h3>
+<p>Setting up mutations is as easy as queries, following a very similar process.</p>
+<p>All <a href="http://graphql.org/learn/queries/#mutations">GraphQL mutations</a> start from a root type called <strong>Mutation</strong>.</p>
+<p>This type is auto generated in the file <code>app/graphql/types/mutation_type.rb</code>:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/app/graphql/types/mutation_type.rb&quot;)"><code>module Types
+  class MutationType &lt; BaseObject
+    # TODO: remove me
+    field :test_field, String, null: false,
+      description: &quot;An example field added by the generator&quot;
+    def test_field
+      &quot;Hello World&quot;
+    end
+  end
+end</code></pre>
+<p>This type is a placeholder for all GraphQL mutations.</p>
+<p>To prevent any error when you first start your GraphQL project, it is generated with a dummy <code>testField</code> field. You will be able to remove it as soon as you add your own mutation below.</p>
+<p>The mutation type is automatically exposed in your schema:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/blob/master/app/graphql/graphql_tutorial_schema.rb&quot;)"><code>class GraphqlTutorialSchema &lt; GraphQL::Schema
+  mutation Types::MutationType
+  query Types::QueryType
+end</code></pre>
+<h3 id="resolvers-with-arguments">Resolvers with Arguments</h3>
+<p>Now add a resolver for <code>createLink</code>.</p>
+<p>For this purpose, you’ll use a <a href="http://graphql-ruby.org/mutations/mutation_classes.html">Mutation class</a>, as mentioned earlier.</p>
+<p><Instruction></p>
+<p>Create a new file - <code>app/graphql/mutations/base_mutation.rb</code>:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/app/graphql/mutations/base_mutation.rb&quot;)"><code>module Mutations
+  # This class is used as a parent for all mutations, and it is the place to have common utilities
+  class BaseMutation &lt; GraphQL::Schema::Mutation
+    null false
+  end
+end</code></pre>
+<p></Instruction></p>
+<p><Instruction></p>
+<p>Create a new file - <code>app/graphql/mutations/create_link.rb</code>:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/app/graphql/mutations/create_link.rb&quot;)"><code>module Mutations
+  class CreateLink &lt; BaseMutation
+    # arguments passed to the `resolve` method
+    argument :description, String, required: true
+    argument :url, String, required: true
+
+    # return type from the mutation
+    type Types::LinkType
+
+    def resolve(description: nil, url: nil)
+      Link.create!(
+        description: description,
+        url: url,
+      )
+    end
+  end
+end</code></pre>
+<p></Instruction></p>
+<p><Instruction></p>
+<p>Then expose this mutation in <code>app/graphql/types/mutation_type.rb</code>:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/app/graphql/types/mutation_type.rb&quot;)"><code>module Types
+  class MutationType &lt; BaseObject
+    field :create_link, mutation: Mutations::CreateLink
+  end
+end</code></pre>
+<p></Instruction></p>
+<h3 id="testing-with-playground">Testing with Playground</h3>
+<p>To test, just restart the server again and use the new mutation with GraphiQL:</p>
+<figure>
+<img src="http://i.imgur.com/pHNRZlG.png" alt="Testing with Playground" /><figcaption>Testing with Playground</figcaption>
+</figure>
+<h3 id="testing-with-unit-test">Testing with Unit Test</h3>
+<p>It’s a good practice in Ruby to unit test your resolver objects.</p>
+<p>Here is an example of <code>Resolvers::CreateLink</code> test:</p>
+<pre class="ruby(path=&quot;.../graphql-ruby/test/graphql/mutations/create_link_test.rb&quot;)"><code>require &#39;test_helper&#39;
+
+class Mutations::CreateLinkTest &lt; ActiveSupport::TestCase
+  def perform(user: nil, **args)
+    Mutations::CreateLink.new(object: nil, field: nil, context: {}).resolve(args)
+  end
+
+  test &#39;create a new link&#39; do
+    link = perform(
+      url: &#39;http://example.com&#39;,
+      description: &#39;description&#39;,
+    )
+
+    assert link.persisted?
+    assert_equal link.description, &#39;description&#39;
+    assert_equal link.url, &#39;http://example.com&#39;
+  end
+end</code></pre>
+<p>You can run the tests with the following command:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">bundle</span> exec rails test</a></code></pre></div>
+</body>
+</html>
