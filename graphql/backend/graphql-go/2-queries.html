@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Queries</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Queries</h1>
+</header>
+<p>In the previous section we setup up the server, Now we try to implement a Query that we defined in <code>schema.graphqls</code>.</p>
+<h2 id="what-is-a-query">What Is A Query <a name="what-is-a-query"></a></h2>
+<p>a query in graphql is asking for data, you use a query and specify what you want and graphql will return it back to you.</p>
+<h2 id="simple-query">Simple Query <a name="simple-query"></a></h2>
+<p><Instruction></p>
+<p>open <code>schema.resolvers.go</code> file and take a look at Links function,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">func</span> (r *queryResolver) Links(ctx context.Context) ([]*model.Link, <span class="dt">error</span>) {</a></code></pre></div>
+<p></Instruction></p>
+<p>Notice that this function takes a Context and returns slice of Links and an error(if there are any). ctx argument contains the data from the person who sends request like which user is working with app(we’ll see how later), etc.</p>
+<p>Let’s make a dummy response for this function, for now.</p>
+<p><Instruction></p>
+<p><code>schema.resolvers.go</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">func</span> (r *queryResolver) Links(ctx context.Context) ([]*model.Link, <span class="dt">error</span>) {</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">var</span> links []*model.Link</a>
+<a class="sourceLine" id="cb2-3" title="3">  dummyLink := model.Link{</a>
+<a class="sourceLine" id="cb2-4" title="4">    Title: <span class="st">&quot;our dummy link&quot;</span>,</a>
+<a class="sourceLine" id="cb2-5" title="5">    Address: <span class="st">&quot;https://address.org&quot;</span>,</a>
+<a class="sourceLine" id="cb2-6" title="6">    User: &amp;model.User{Name: <span class="st">&quot;admin&quot;</span>},</a>
+<a class="sourceLine" id="cb2-7" title="7">  }</a>
+<a class="sourceLine" id="cb2-8" title="8">    links = <span class="bu">append</span>(links, &amp;dummyLink)</a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="kw">return</span> links, <span class="ot">nil</span></a>
+<a class="sourceLine" id="cb2-10" title="10">}</a></code></pre></div>
+<p></Instruction></p>
+<p>now run the server with <code>go run server.go</code> and send this query in Graphiql:</p>
+<pre><code>query {
+    links{
+    title
+    address,
+    user{
+      name
+    }
+  }
+}</code></pre>
+<p>And you will get:</p>
+<pre><code>{
+  &quot;data&quot;: {
+    &quot;links&quot;: [
+      {
+        &quot;title&quot;: &quot;our dummy link&quot;,
+        &quot;address&quot;: &quot;https://address.org&quot;,
+        &quot;user&quot;: {
+          &quot;name&quot;: &quot;admin&quot;
+        }
+      }
+    ]
+  }
+}</code></pre>
+<p>Now you know how we generate response for our graphql server. But this response is just a dummy response we want be able to query all other users links, In the next section we setup database for our app to be able to save links and retrieve them from database.</p>
+</body>
+</html>

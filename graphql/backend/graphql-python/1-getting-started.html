@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Getting Started</title>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/bgoonz/docs-collection/master/nextjs.css">
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Getting Started</h1>
+</header>
+<h3 id="what-are-you-going-to-build">What are you going to build?</h3>
+<p>In this tutorial, you are going to create a <a href="https://news.ycombinator.com">Hackernews</a> clone using Django and Graphene. The platform will have the following features:</p>
+<ul>
+<li>List of Users and Links</li>
+<li>Users creation and authentication</li>
+<li>Users can create Links and vote on them</li>
+</ul>
+<h3 id="creating-your-local-environment">Creating your local environment</h3>
+<p>Before starting, make sure you have Python 3.6 installed. If not, you can download it <a href="https://www.python.org/downloads/">here</a>. The installation is pretty straightforward on any supported operating system.</p>
+<p>When working with Python, you will use <em>Virtual Environment</em>: a tool for keeping all the project’s dependencies isolated from your system – or other projects.</p>
+<p><Instruction></p>
+<p>In the terminal, create a new virtual environment and activate it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">python3.6</span> -m venv venv</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="bu">source</span> venv/bin/activate</a></code></pre></div>
+<p></Instruction></p>
+<p>You’ll notice your prompt changed to <code>(venv) ...</code>. It means you are <em>inside</em> your virtual environment, every Python package will be installed there. If you want to leave it, just type <code>deactivate</code>. Make sure to <em>always</em> have the virtual environment activated.</p>
+<h3 id="installing-django-and-graphene">Installing Django and Graphene</h3>
+<p>The tool used to manage Python packages is <code>pip</code>, which should be available with your Python installation.</p>
+<p><Instruction></p>
+<p>With the virtual environment activated, run the following commands:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">pip</span> install django==2.1.4 graphene-django==2.2.0 django-filter==2.0.0 django-graphql-jwt==0.1.5</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">django-admin</span> startproject hackernews</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="bu">cd</span> hackernews</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ex">python</span> manage.py migrate</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="ex">python</span> manage.py runserver</a></code></pre></div>
+<p></Instruction></p>
+<p>Don’t worry about the <code>hackernews/hackernews</code> structure, this is just the way Django works!</p>
+<p>The commands above will install the necessary libraries, create a new Django project, create the base Django tables and start its builtin web server. To test it, open your browser and access the <code>http://localhost:8000</code> address. You should see the following page:</p>
+<figure>
+<img src="https://i.imgur.com/QDZzLye.png" alt="The install worked successfully!" /><figcaption>The install worked successfully!</figcaption>
+</figure>
+<h3 id="configuring-graphene-django">Configuring Graphene Django</h3>
+<p><Instruction></p>
+<p>In the <code>hackernews/settings.py</code> file, search for the <code>INSTALLED_APPS</code> variable and add the following:</p>
+<pre class="python(path=&quot;.../graphql-python/hackernews/hackernews/settings.py&quot;)"><code>INSTALLED_APPS = (
+    # After the default packages
+    &#39;graphene_django&#39;,
+)</code></pre>
+<p></Instruction></p>
+<p><Instruction></p>
+<p>And add following at the bottom of the file:</p>
+<pre class="python(path=&quot;.../graphql-python/hackernews/hackernews/settings.py&quot;)"><code>GRAPHENE = {
+    &#39;SCHEMA&#39;: &#39;hackernews.schema.schema&#39;,
+}</code></pre>
+<p></Instruction></p>
+</body>
+</html>
